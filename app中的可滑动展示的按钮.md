@@ -1,3 +1,5 @@
+#### 组件使用方法：将这个layout组件套在所有需要使用悬浮按钮的页面即可
+
 Layout/index.vue
 
 这个组件的作用是作为一个架子，需要展示悬浮按钮的页面，将整个页面都放在这个组件内，原理就是插槽。
@@ -50,7 +52,7 @@ Floating/index.vue
 ```vue
 <template>
 	<view>
-		<!-- 点击屏幕任意地方隐藏 -->
+		<!-- 点击屏幕任意地方隐藏，因为这个view的高宽设置占满了整个屏幕 -->
 		<view class="all" v-if="isC" @click="isC = false"></view>
 		<!-- 单个未点击的球 -->
 		<view class="qiu" :style="'transform: translate(' + x + 'px,' + y + 'px);'" :class="{ chu: isC }"
@@ -137,7 +139,7 @@ Floating/index.vue
 					this.isC = false
 				}
 			},
-            //这里的作用是
+            //这里的作用是在点击到不同tabBar时同步按钮在y轴的偏移量
 			'getBtnY':{
 				immediate:true,
 				handler(val){
@@ -218,11 +220,11 @@ Floating/index.vue
 				console.log('this.start.top',this.start.top);
 			},
 			touchE(val) {
-				
 				this.x = 0
 				this.oldx = this.x
-				this.oldy = this.y
-				this.$store.commit('setBtnPosition',this.y)
+				this.oldy = this.y;
+                //这一步是将y轴偏移量存在vuex
+this.$store.commit('setBtnPosition',this.y);
 				this.isMove = false
 			},
 		}
